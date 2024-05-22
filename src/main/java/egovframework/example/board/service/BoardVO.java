@@ -1,9 +1,11 @@
 package egovframework.example.board.service;
 
+import egovframework.example.file.service.FileVO;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 public class BoardVO {
@@ -16,4 +18,5 @@ public class BoardVO {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate modifyDate;
 	private int hits;
+	private List<FileVO> fileList;
 }

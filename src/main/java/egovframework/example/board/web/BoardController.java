@@ -74,11 +74,7 @@ public class BoardController {
 
     @PostMapping("add")
     public String boardAdd(BoardVO vo, Model model, List<MultipartFile> files) {
-        /*
-        스프링은 첨부파일을 MultipartFile을 지원한다.
-         */
-        int insertBoard = service.insertBoard(vo);
-
+        /* 스프링은 첨부파일을 MultipartFile을 지원한다. */
         List<FileVO> fileList = new ArrayList<>();
         for (MultipartFile file : files) {
             if (file.isEmpty()) {
@@ -109,8 +105,9 @@ public class BoardController {
                 throw new RuntimeException(e);
             }
         }
-
-        fileService.saveFiles(insertBoard, fileList);
+        vo.setFileList(fileList);
+        // 등록한 글 번호가 반환된다.
+        int insertBoard = service.insertBoard(vo);
 
         if (insertBoard > 0) {
             // 등록 성공

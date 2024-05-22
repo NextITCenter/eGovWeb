@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<jsp:include page="/WEB-INF/jsp/egovframework/example/common/header.jsp">
+<jsp:include page="/WEB-INF/jsp/common/header.jsp">
     <jsp:param name="title" value="게시글 수정"/>
 </jsp:include>
 <h1>게시글 수정</h1>
@@ -27,4 +27,4 @@
     <button type="submit">저장</button>
     <button type="button">취소</button>
 </form>
-<jsp:include page="/WEB-INF/jsp/egovframework/example/common/footer.jsp" />
+<jsp:include page="/WEB-INF/jsp/common/footer.jsp" />

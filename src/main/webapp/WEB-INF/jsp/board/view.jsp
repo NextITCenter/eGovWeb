@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include page="/WEB-INF/jsp/egovframework/example/common/header.jsp">
+<jsp:include page="/WEB-INF/jsp/common/header.jsp">
     <jsp:param name="title" value="게시글 상세"/>
 </jsp:include>
 
@@ -34,4 +34,4 @@
         <p><a href="/board/download/${file.id}">${file.originalName}</a></p>
     </c:forEach>
 </div>
-<jsp:include page="/WEB-INF/jsp/egovframework/example/common/footer.jsp" />
+<jsp:include page="/WEB-INF/jsp/common/footer.jsp" />

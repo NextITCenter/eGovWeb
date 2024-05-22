@@ -6,9 +6,9 @@
         (BOARD_NO, FILE_PATH, FILE_NAME, ORIGINAL_NAME, FILE_SIZE)
         <foreach collection="list" item="file" separator="UNION ALL">
             SELECT
-            #{file.boardNo}, #{file.filePath}, #{file.fileName}, #{file.originalName}, #{file.fileSize}
+                #{file.boardNo}, #{file.filePath}, #{file.fileName}, #{file.originalName}, #{file.fileSize}
             FROM
-            DUAL
+                DUAL
         </foreach>
     </insert>
 

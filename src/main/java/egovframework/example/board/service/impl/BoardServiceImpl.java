@@ -3,17 +3,19 @@ package egovframework.example.board.service.impl;
 import egovframework.example.board.service.BoardService;
 import egovframework.example.board.service.BoardVO;
 import egovframework.example.cmmn.SearchVO;
+import egovframework.example.file.service.FileVO;
+import egovframework.example.file.service.impl.FileMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService {
     private final BoardMapper mapper;
-
-    public BoardServiceImpl(BoardMapper mapper) {
-        this.mapper = mapper;
-    }
+    private final FileMapper fileMapper;
 
     @Override
     public int getBoardListCount(SearchVO vo) {
@@ -36,6 +38,15 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public int insertBoard(BoardVO vo) {
         mapper.insertBoard(vo);
+        // 글 번호를 FileVO 리스트 안에 각각 넣어준다.
+        if (!vo.getFileList().isEmpty()) {
+            List<FileVO> fileList = new ArrayList<>();
+            for (FileVO file : vo.getFileList()) {
+                file.setBoardNo(vo.getNo());
+                fileList.add(file);
+            }
+            fileMapper.saveFiles(fileList);
+        }
         return vo.getNo();
     }
 

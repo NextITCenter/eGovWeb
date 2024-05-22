@@ -43,17 +43,16 @@
 			<param-value>/WEB-INF/config/egovframework/springmvc/dispatcher-servlet.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		<multipart-config>
+			<max-file-size>100000000</max-file-size>
+		</multipart-config>
 	</servlet>
     
 	<servlet-mapping>
 		<servlet-name>action</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-    
-	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
-	</welcome-file-list>
-    
+
 	<login-config>
 		<auth-method>BASIC</auth-method>
 	</login-config>

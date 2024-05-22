@@ -13,9 +13,21 @@
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
     </context:component-scan>
 
+    <!--
+     이 설정을 추가하면 json 데이터 응답을 간단하게 설정할 수 있다.
+     pom.xml에 jackson-databind 라이브러리를 다운로드 받을 수 있게 설정하면 된다.
+     -->
+<!--    <mvc:annotation-driven/>-->
+
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
         <property name="webBindingInitializer">
             <bean class="egovframework.example.cmmn.web.EgovBindingInitializer"/>
+        </property>
+        <property name="messageConverters">
+            <list>
+                <bean class="org.springframework.http.converter.StringHttpMessageConverter" />
+                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
+            </list>
         </property>
     </bean>
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
@@ -32,22 +44,22 @@
         <property name="paramName" value="language"/>
     </bean>
 
-    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-        <property name="defaultErrorView" value="cmmn/egovError"/>
-        <property name="exceptionMappings">
-            <props>
-                <prop key="org.springframework.dao.DataAccessException">cmmn/dataAccessFailure</prop>
-                <prop key="org.springframework.transaction.TransactionException">cmmn/transactionFailure</prop>
-                <prop key="org.egovframe.rte.fdl.cmmn.exception.EgovBizException">cmmn/egovError</prop>
-                <prop key="org.springframework.security.AccessDeniedException">cmmn/egovError</prop>
-            </props>
-        </property>
-    </bean>
+<!--    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">-->
+<!--        <property name="defaultErrorView" value="cmmn/egovError"/>-->
+<!--        <property name="exceptionMappings">-->
+<!--            <props>-->
+<!--                <prop key="org.springframework.dao.DataAccessException">cmmn/dataAccessFailure</prop>-->
+<!--                <prop key="org.springframework.transaction.TransactionException">cmmn/transactionFailure</prop>-->
+<!--                <prop key="org.egovframe.rte.fdl.cmmn.exception.EgovBizException">cmmn/egovError</prop>-->
+<!--                <prop key="org.springframework.security.AccessDeniedException">cmmn/egovError</prop>-->
+<!--            </props>-->
+<!--        </property>-->
+<!--    </bean>-->
 
     <bean class="org.springframework.web.servlet.view.UrlBasedViewResolver"
           p:order="1"
           p:viewClass="org.springframework.web.servlet.view.JstlView"
-          p:prefix="/WEB-INF/jsp/egovframework/example/"
+          p:prefix="/WEB-INF/jsp/"
           p:suffix=".jsp"/>
 
     <!-- For Pagination Tag -->
@@ -62,5 +74,8 @@
     </bean>
     <!-- /For Pagination Tag -->
 
-    <mvc:view-controller path="/cmmn/validator.do" view-name="cmmn/validator"/>
+    <!-- multipart/form-data를 해결하기 위한 bean 등록 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver" />
+
+    <mvc:view-controller path="/cmmn/validator" view-name="cmmn/validator"/>
 </beans>

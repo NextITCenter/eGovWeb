@@ -7,6 +7,7 @@ import egovframework.example.file.service.FileVO;
 import egovframework.example.file.service.impl.FileMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ public class BoardServiceImpl implements BoardService {
         return mapper.getBoardList(vo);
     }
 
+    @Transactional
     @Override
     public BoardVO getBoard(int searchNo) {
         // 게시글 조회시 카운트가 증가할 때 조회수에 따른 등급이나 인기글로 설정하는 등
@@ -35,6 +37,7 @@ public class BoardServiceImpl implements BoardService {
         return mapper.getBoard(searchNo);
     }
 
+    @Transactional
     @Override
     public int insertBoard(BoardVO vo) {
         mapper.insertBoard(vo);

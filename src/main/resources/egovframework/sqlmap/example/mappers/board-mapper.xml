@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="egovframework.example.board.service.impl.BoardMapper">
+
+	<resultMap id="boardMap" type="boardVO">
+		<result property="no" column="no"/>
+		<result property="writer" column="writer"/>
+		<result property="title" column="title"/>
+		<result property="content" column="content"/>
+		<result property="createDate" column="create_date"/>
+		<result property="modifyDate" column="modify_date"/>
+		<result property="hits" column="hits"/>
+		<collection property="fileList" select="selectFileList" column="no" javaType="list" ofType="fileVO" />
+	</resultMap>
+
 	<select id="getBoardListCount" parameterType="searchVO" resultType="int">
 		SELECT
 			COUNT(*) CNT
@@ -55,7 +67,7 @@
 		WHERE RNUM BETWEEN #{firstRecordIndex} + 1 AND #{lastRecordIndex}
 
 	</select>
-	<select id="getBoard" parameterType="int" resultType="boardVO">
+	<select id="getBoard" parameterType="int" resultMap="boardMap">
 		SELECT
 			A.NO,
 			B.NAME WRITER,
@@ -70,6 +82,23 @@
 		WHERE
  			NO = #{no}
 	</select>
+	<select id="selectFileList" parameterType="int" resultType="fileVO">
+        SELECT
+            ID,
+            BOARD_NO,
+            FILE_PATH,
+            FILE_NAME,
+            ORIGINAL_NAME,
+            FILE_SIZE,
+            CREATE_DATE
+        FROM
+            ATTACHED_FILE
+        WHERE
+            BOARD_NO = #{boardNo}
+        ORDER BY
+            ID
+    </select>
+
 	<insert id="insertBoard" parameterType="boardVO" useGeneratedKeys="true" keyColumn="no" keyProperty="no">
 		INSERT INTO BOARD
 			(WRITER, TITLE, CONTENT)

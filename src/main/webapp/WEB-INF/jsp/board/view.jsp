@@ -5,10 +5,8 @@
     <jsp:param name="title" value="게시글 상세"/>
 </jsp:include>
 
-
 <a href="/board/update?no=${board.no}">수정</a>
 <a href="javascript:deleteItem('/board/delete?no=${board.no}');">삭제</a>
-
 
 <div>
     글번호: ${board.no }
@@ -29,7 +27,7 @@
     내용: ${board.content }
 </div>
 <div>첨부파일:<br>
-    <c:forEach items="${files}" var="file">
+    <c:forEach items="${board.fileList}" var="file">
         <p><img src="/board/download/${file.id}" alt="${file.originalName}"></p>
         <p><a href="/board/download/${file.id}">${file.originalName}</a></p>
     </c:forEach>

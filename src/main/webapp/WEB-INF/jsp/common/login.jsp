@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,9 +17,9 @@
 </head>
 <body>
 <h2>로그인</h2>
-<form action="/login" method="post" id="loginForm" enctype="">
+<form action="/login" method="post" id="loginForm">
 	<label>아이디:
-		<input type="text" name="id" value="${cookie.savedId.value }" placeholder="ID를 입력하세요.">
+		<input type="text" name="username" value="${cookie.savedId.value }" placeholder="ID를 입력하세요.">
 	</label>
 	<label>패스워드:
 		<input type="password" name="password" placeholder="패스워드를 입력하세요.">
@@ -27,8 +28,9 @@
 		<input type="checkbox" value="true"> 아이디 저장
 	</label>
 	<input type="hidden" name="location" value="${location}">
+	<sec:csrfInput/>
 	<div id="log">${msg}</div>
-	<button type="button" id="loginBtn">로그인</button>
+	<button type="submit">로그인</button>
 	<button type="button">취소</button>
 </form>
 <script>
